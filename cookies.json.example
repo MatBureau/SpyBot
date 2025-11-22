@@ -1,0 +1,20 @@
+[
+  {
+    "name": "cf_clearance",
+    "value": "your_cloudflare_clearance_token",
+    "domain": ".keepa.com",
+    "path": "/",
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "session_id",
+    "value": "your_session_id",
+    "domain": ".keepa.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  }
+]

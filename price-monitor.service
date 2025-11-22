@@ -1,0 +1,33 @@
+[Unit]
+Description=Amazon Price Monitor Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+Group=YOUR_USERNAME
+WorkingDirectory=/path/to/MeetTheSpy
+Environment="PATH=/path/to/MeetTheSpy/venv/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/path/to/MeetTheSpy/venv/bin/python main.py
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=5min
+StartLimitBurst=4
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/path/to/MeetTheSpy
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=price-monitor
+
+[Install]
+WantedBy=multi-user.target
