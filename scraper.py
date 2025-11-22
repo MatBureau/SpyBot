@@ -10,7 +10,14 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass
 
 from playwright.async_api import async_playwright, Browser, BrowserContext, Page, TimeoutError as PlaywrightTimeout
-from playwright_stealth import stealth_async
+
+# Try to import playwright-stealth, but make it optional
+try:
+    from playwright_stealth import stealth_async
+    STEALTH_AVAILABLE = True
+except ImportError:
+    STEALTH_AVAILABLE = False
+    logger.warning("playwright-stealth not available, using native stealth configuration")
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +117,19 @@ class KeepaScraperEngine:
 
             # Create page and apply stealth
             self.page = await self.context.new_page()
-            await stealth_async(self.page)
+
+            # Apply stealth if available
+            if STEALTH_AVAILABLE:
+                await stealth_async(self.page)
+                logger.info("Applied playwright-stealth")
+            else:
+                # Use native stealth techniques
+                await self.page.add_init_script("""
+                    Object.defineProperty(navigator, 'webdriver', {
+                        get: () => undefined
+                    });
+                """)
+                logger.info("Applied native stealth configuration")
 
             logger.info("Browser initialized successfully")
 

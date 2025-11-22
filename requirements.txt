@@ -7,7 +7,10 @@ discord.py>=2.3.2
 
 # Web Scraping
 playwright>=1.40.0
-playwright-stealth>=1.0.6
+
+# Optional: Enhanced stealth (not required, native stealth is used as fallback)
+# Uncomment if you want to use playwright-stealth (may have compatibility issues)
+# playwright-stealth>=1.0.6
 
 # Utilities
 aiohttp>=3.9.0

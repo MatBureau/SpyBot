@@ -4,11 +4,13 @@ Guide complet pour déployer le bot Amazon Price Monitor sur un serveur Linux 24
 
 ## 🎯 Prérequis
 
-- VPS/Serveur Linux (Ubuntu 20.04+ ou Debian 11+ recommandé)
+- VPS/Serveur Linux (Ubuntu 20.04/22.04 ou Debian 11+ recommandé)
 - Accès SSH au serveur
 - 1 GB RAM minimum
 - 10 GB espace disque
 - Python 3.10+
+
+> ⚠️ **IMPORTANT - Ubuntu 24.10+** : Si vous utilisez Ubuntu 24.10 (Plucky) ou une version plus récente, vous rencontrerez des problèmes avec `playwright install-deps`. Consultez [UBUNTU_FIX.md](UBUNTU_FIX.md) pour les solutions. Dans la plupart des cas, vous pouvez **ignorer l'erreur et le bot fonctionnera quand même**.
 
 ## 📦 Fournisseurs VPS Recommandés
 
@@ -103,7 +105,26 @@ pip install -r requirements.txt
 # Installer Playwright
 playwright install chromium
 playwright install-deps
+# Note: Si 'install-deps' échoue sur Ubuntu 24.10+, c'est normal - voir ci-dessous
 ```
+
+#### 🔧 Fix pour Ubuntu 24.10+ (Si install-deps échoue)
+
+Si vous obtenez l'erreur `Unable to locate package libicu74`, ne paniquez pas ! Deux options :
+
+**Option A - Ignorer l'erreur (Recommandé)**
+
+Le bot fonctionnera probablement quand même. Passez directement à l'étape suivante et testez.
+
+**Option B - Installer manuellement**
+
+```bash
+# Exécuter le script de fix
+chmod +x fix_ubuntu_deps.sh
+sudo bash fix_ubuntu_deps.sh
+```
+
+Consultez [UBUNTU_FIX.md](UBUNTU_FIX.md) pour plus de détails.
 
 ### 7. Configuration
 
